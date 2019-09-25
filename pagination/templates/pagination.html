@@ -1,0 +1,30 @@
+
+<ul class="pagination pull-right">
+    {% if page_obj.has_previous %}
+        <li>
+            <a href="?{{ page_obj.previous_page_number.querystring }}" data-page="{{ page_obj.previous_page_number }}">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </li>
+    {% endif %}
+
+    {% for page in page_obj.pages %}
+        {% if page %}
+            {% if page == page_obj.number %}
+                <li class="active"><a>{{ page }}</a></li>
+            {% else %}
+                <li><a href="?{{ page.querystring }}" data-page="{{ page }}">{{ page }}</a></li>
+            {% endif %}
+        {% else %}
+            <li>...</li>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <li>
+            <a href="{{ page_obj.next_page_number.querystring }}" data-page="{{ page_obj.next_page_number }}">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+    {% endif %}
+</ul>
