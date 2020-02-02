@@ -22,7 +22,7 @@
 
     {% if page_obj.has_next %}
         <li>
-            <a href="{{ page_obj.next_page_number.querystring }}" data-page="{{ page_obj.next_page_number }}">
+            <a href="?{{ page_obj.next_page_number.querystring }}" data-page="{{ page_obj.next_page_number }}">
                 <i class="fa fa-angle-right"></i>
             </a>
         </li>
