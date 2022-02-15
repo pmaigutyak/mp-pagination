@@ -135,3 +135,13 @@ class Page(object):
             'page_obj': self,  # Issue 9 https://github.com/jamespacileo/django-pure-pagination/issues/9
                                # Use same naming conventions as Django
         })
+
+    @property
+    def next_page_url(self):
+
+        if not self.has_next():
+            return ''
+
+        return '{}?{}'.format(
+            self.paginator.request.path,
+            self.next_page_number().querystring)
