@@ -132,7 +132,7 @@ class Page(object):
     def render(self):
         return render_to_string(self.template, {
             'current_page': self,
-            'page_obj': self,  # Issue 9 https://github.com/jamespacileo/django-pure-pagination/issues/9
+            'page_obj': self  # Issue 9 https://github.com/jamespacileo/django-pure-pagination/issues/9
                                # Use same naming conventions as Django
         })
 
@@ -145,3 +145,16 @@ class Page(object):
         return '{}?{}'.format(
             self.paginator.request.path,
             self.next_page_number().querystring)
+
+    def serialize(self):
+
+        url = '%s?' % self.paginator.request.path
+
+        return {
+            'has_next': self.has_next(),
+            'has_previous': self.has_previous(),
+            'next_page_number': self.next_page_number(),
+            'previous_page_number': self.previous_page_number(),
+            'next_page_url': url + self.next_page_number().querystring,
+            'previous_page_url': url + self.previous_page_number().querystring
+        }
