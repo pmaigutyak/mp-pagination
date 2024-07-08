@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 
-version = '0.2.2'
+version = '0.3.0'
 url = 'https://github.com/pmaigutyak/mp-pagination'
 
 setup(

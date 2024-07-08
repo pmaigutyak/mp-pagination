@@ -1,6 +1,6 @@
 
 import functools
-import collections
+from collections.abc import Iterable
 
 from django.template.loader import render_to_string
 
@@ -21,7 +21,7 @@ def add_page_querystring(func):
         if isinstance(result, int):
             querystring = self._other_page_querystring(result)
             return PageRepresentation(result, querystring)
-        elif isinstance(result, collections.Iterable):
+        elif isinstance(result, Iterable):
             new_result = []
             for number in result:
                 if isinstance(number, int):
@@ -118,22 +118,16 @@ class Page(object):
         return result
 
     def _other_page_querystring(self, page_number):
-        """
-        Returns a query string for the given page, preserving any
-        GET parameters present.
-        """
         if self.paginator.request:
             self.base_queryset['page'] = page_number
             return self.base_queryset.urlencode()
 
-        # raise Warning("You must supply Paginator() with the request object for a proper querystring.")
         return 'page=%s' % page_number
 
     def render(self):
         return render_to_string(self.template, {
             'current_page': self,
-            'page_obj': self  # Issue 9 https://github.com/jamespacileo/django-pure-pagination/issues/9
-                               # Use same naming conventions as Django
+            'page_obj': self
         })
 
     @property
